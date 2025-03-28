@@ -128,6 +128,12 @@
         <div class="counter" id="counter-x9">-</div>
         <button class="increment-button" onclick="incrementCounter('x9')">+</button>
     </div>
+
+    <div class="article-container">
+        <button class="article-button" onclick="location.href='https://holmsander.github.io/docs/chinese/x10.html'">生活中的小事</button>
+        <div class="counter" id="counter-x10">-</div>
+        <button class="increment-button" onclick="incrementCounter('x10')">+</button>
+    </div>
     
     <div class="status" id="status"></div>
 
@@ -137,7 +143,7 @@
         const statusElement = document.getElementById('status');
         
         // Array of article IDs
-        const articleIds = ['x1', 'x2', 'x3', 'x4', 'x5', 'x6', 'x7', 'x8', 'x9'];
+        const articleIds = ['x1', 'x2', 'x3', 'x4', 'x5', 'x6', 'x7', 'x8', 'x9', 'x10'];
         
         // Load all counters when page loads
         window.addEventListener('DOMContentLoaded', () => {
