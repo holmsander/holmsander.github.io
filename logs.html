@@ -153,4 +153,185 @@
                     <label for="log-password">Password:</label>
                     <input type="password" id="log-password" placeholder="Enter password to submit log">
                 </div>
-                <button
+                <button class="button" onclick="submitLog()">Add Log Entry</button>
+                <div class="status" id="submit-status"></div>
+            </div>
+            
+            <!-- Logs List -->
+            <div class="logs-list" id="logs-list">
+                <!-- Logs will be populated here via JavaScript -->
+                <p class="loading">Loading logs...</p>
+            </div>
+            
+            <a href="index.html" class="back-link">← Back to Home</a>
+        </div>
+    </div>
+
+    <script>
+        // API URL without trailing slash
+        const API_URL = 'https://holmsandergithubio-production.up.railway.app';
+        
+        // DOM Elements
+        const passwordContainer = document.getElementById('password-container');
+        const logsContainer = document.getElementById('logs-container');
+        const passwordStatus = document.getElementById('password-status');
+        const submitStatus = document.getElementById('submit-status');
+        const logsList = document.getElementById('logs-list');
+        
+        // Function to verify password for access
+        async function verifyPassword() {
+            const passwordInput = document.getElementById('access-password').value;
+            
+            if (!passwordInput) {
+                passwordStatus.className = 'status error';
+                passwordStatus.textContent = 'Please enter a password';
+                return;
+            }
+            
+            try {
+                const response = await fetch(`${API_URL}/logs/verify`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ 
+                        password: passwordInput 
+                    })
+                });
+                
+                if (response.status === 403) {
+                    passwordStatus.className = 'status error';
+                    passwordStatus.textContent = 'Incorrect password';
+                    return;
+                }
+                
+                if (!response.ok) {
+                    throw new Error('Failed to verify password');
+                }
+                
+                // Password verified, show logs container
+                passwordContainer.style.display = 'none';
+                logsContainer.style.display = 'block';
+                
+                // Load logs
+                loadLogs();
+                
+            } catch (error) {
+                passwordStatus.className = 'status error';
+                passwordStatus.textContent = `Error: ${error.message}`;
+                console.error('Error verifying password:', error);
+            }
+        }
+        
+        // Function to load logs from the server
+        async function loadLogs() {
+            try {
+                const response = await fetch(`${API_URL}/logs`);
+                
+                if (!response.ok) {
+                    throw new Error('Failed to fetch logs');
+                }
+                
+                const logs = await response.json();
+                displayLogs(logs);
+                
+            } catch (error) {
+                logsList.innerHTML = `<p class="error">Error loading logs: ${error.message}</p>`;
+                console.error('Error loading logs:', error);
+            }
+        }
+        
+        // Function to display logs in the UI
+        function displayLogs(logs) {
+            if (!logs || logs.length === 0) {
+                logsList.innerHTML = '<p>No logs found</p>';
+                return;
+            }
+            
+            // Sort logs with newest first
+            logs.sort((a, b) => new Date(b.timestamp) - new Date(a.timestamp));
+            
+            // Create HTML for logs
+            let logsHtml = '';
+            logs.forEach(log => {
+                const date = new Date(log.timestamp);
+                const formattedDate = date.toLocaleString();
+                
+                logsHtml += `
+                <div class="log-entry">
+                    <div class="log-entry-header">
+                        <span class="log-entry-id">#${log.id}</span>
+                        <span class="log-entry-timestamp">${formattedDate}</span>
+                    </div>
+                    <div class="log-entry-content">${log.message}</div>
+                </div>
+                `;
+            });
+            
+            logsList.innerHTML = logsHtml;
+        }
+        
+        // Function to submit a new log
+        async function submitLog() {
+            const logMessage = document.getElementById('log-message').value;
+            const passwordInput = document.getElementById('log-password').value;
+            
+            if (!logMessage) {
+                submitStatus.className = 'status error';
+                submitStatus.textContent = 'Please enter a log message';
+                return;
+            }
+            
+            if (!passwordInput) {
+                submitStatus.className = 'status error';
+                submitStatus.textContent = 'Please enter the password';
+                return;
+            }
+            
+            try {
+                const response = await fetch(`${API_URL}/logs/add`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ 
+                        message: logMessage,
+                        password: passwordInput 
+                    })
+                });
+                
+                if (response.status === 403) {
+                    submitStatus.className = 'status error';
+                    submitStatus.textContent = 'Incorrect password';
+                    return;
+                }
+                
+                if (!response.ok) {
+                    throw new Error('Failed to add log');
+                }
+                
+                // Clear the form
+                document.getElementById('log-message').value = '';
+                document.getElementById('log-password').value = '';
+                
+                // Show success message
+                submitStatus.className = 'status success';
+                submitStatus.textContent = 'Log added successfully';
+                
+                // Reload logs to show the new one
+                loadLogs();
+                
+                // Clear success message after 3 seconds
+                setTimeout(() => {
+                    submitStatus.textContent = '';
+                }, 3000);
+                
+            } catch (error) {
+                submitStatus.className = 'status error';
+                submitStatus.textContent = `Error: ${error.message}`;
+                console.error('Error adding log:', error);
+            }
+        }
+    </script>
+</body>
+</html>
