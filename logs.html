@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>System Logs</title>
+    <style>
+        body {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            font-family: Arial, sans-serif;
+            padding: 20px;
+            background-color: #f5f5f5;
+            min-height: 100vh;
+        }
+        .container {
+            width: 100%;
+            max-width: 800px;
+        }
+        .password-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 60vh;
+            text-align: center;
+        }
+        .logs-container {
+            display: none;
+        }
+        h1 {
+            margin-bottom: 20px;
+            color: #333;
+        }
+        .input-group {
+            margin-bottom: 15px;
+            width: 100%;
+        }
+        .input-group label {
+            display: block;
+            margin-bottom: 5px;
+            color: #333;
+            font-weight: bold;
+        }
+        .input-group input, .input-group textarea {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 16px;
+        }
+        .input-group textarea {
+            resize: vertical;
+            min-height: 100px;
+        }
+        .button {
+            padding: 12px 20px;
+            font-size: 16px;
+            cursor: pointer;
+            background-color: #4361ee;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            transition: background-color 0.3s;
+        }
+        .button:hover {
+            background-color: #3a56d4;
+        }
+        .back-link {
+            margin-top: 20px;
+            color: #4361ee;
+            text-decoration: none;
+            font-weight: bold;
+        }
+        .back-link:hover {
+            text-decoration: underline;
+        }
+        .status {
+            margin-top: 15px;
+            padding: 10px;
+            color: #666;
+            font-style: italic;
+        }
+        .error {
+            color: #d32f2f;
+        }
+        .success {
+            color: #388e3c;
+        }
+        .log-entry {
+            margin-bottom: 20px;
+            padding: 15px;
+            background-color: white;
+            border-radius: 4px;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+        }
+        .log-entry-header {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 10px;
+            font-size: 14px;
+            color: #666;
+        }
+        .log-entry-timestamp {
+            font-style: italic;
+        }
+        .log-entry-content {
+            white-space: pre-wrap;
+        }
+        .logs-list {
+            margin-top: 30px;
+        }
+        .logs-form {
+            background-color: white;
+            padding: 20px;
+            border-radius: 6px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+        .form-title {
+            margin-top: 0;
+            margin-bottom: 20px;
+            color: #333;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Password Entry Section -->
+        <div class="password-container" id="password-container">
+            <h1>System Logs Access</h1>
+            <p>Please enter the password to access the logs</p>
+            <div class="input-group">
+                <input type="password" id="access-password" placeholder="Enter password">
+            </div>
+            <button class="button" onclick="verifyPassword()">Access Logs</button>
+            <div class="status" id="password-status"></div>
+            <a href="index.html" class="back-link">← Back to Home</a>
+        </div>
+        
+        <!-- Logs Content Section (initially hidden) -->
+        <div class="logs-container" id="logs-container">
+            <h1>System Logs</h1>
+            
+            <!-- Add New Log Form -->
+            <div class="logs-form">
+                <h2 class="form-title">Add New Log Entry</h2>
+                <div class="input-group">
+                    <label for="log-message">Log Message:</label>
+                    <textarea id="log-message" placeholder="Enter your log message"></textarea>
+                </div>
+                <div class="input-group">
+                    <label for="log-password">Password:</label>
+                    <input type="password" id="log-password" placeholder="Enter password to submit log">
+                </div>
+                <button
