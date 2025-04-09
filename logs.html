@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>System Logs</title>
+    <title>日志</title>
     <style>
         body {
             display: flex;
@@ -140,17 +140,16 @@
         
         <!-- Logs Content Section (initially hidden) -->
         <div class="logs-container" id="logs-container">
-            <h1>System Logs</h1>
             
             <!-- Add New Log Form -->
             <div class="logs-form">
-                <h2 class="form-title">Add New Log Entry</h2>
+                <h2 class="form-title">添加日志</h2>
                 <div class="input-group">
-                    <label for="log-message">Log Message:</label>
+                    <label for="log-message">日志信息:</label>
                     <textarea id="log-message" placeholder="Enter your log message"></textarea>
                 </div>
                 <div class="input-group">
-                    <label for="log-password">Password:</label>
+                    <label for="log-password">密碼:</label>
                     <input type="password" id="log-password" placeholder="Enter password to submit log">
                 </div>
                 <button class="button" onclick="submitLog()">Add Log Entry</button>
@@ -163,7 +162,7 @@
                 <p class="loading">Loading logs...</p>
             </div>
             
-            <a href="index.html" class="back-link">← Back to Home</a>
+            <a href="index.html" class="back-link">← 回首頁</a>
         </div>
     </div>
 
