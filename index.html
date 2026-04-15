@@ -177,42 +177,33 @@
           <article class="item">
             <div class="meta">2024</div>
             <div>
-              <h3>Context based frequency dictionary for Mandarin</h3>
+              <h3>Context-based Mandarin frequency dictionary</h3>
               <p class="muted">
-                "Beijing university of forign language" scraped 15 billion characters of essays from different language context.
-                This data was however clunky with many duplicates and bugs due to the nature of the written chinese language. I patched these bugs in the data
-                using over 30 python scripts, some for cleaning, some for verifying cleaning. Then I made cleaned data publicly available at freqchinese.com. 
-                Due to the way chinese words are constructed of characters there are also a lot of interesting relationships between words, these are also available
-                via the normal search function. This was mainly a project of building a fast backend (PostgreSQL) but still capable of hundreds of thousans of entries with relationships.
+                I used a 15B-character essay corpus scraped by Beijing Foreign Studies University, which contained many duplicates and errors due to the nature of written Chinese. I cleaned and validated the data with 30+ Python scripts, then published the refined dataset at freqchinese.com.
 
-              </p>
-              <a href="#">https://github.com/holmsander/zhdict</a>
+                The dictionary also captures relationships between words based on shared characters, accessible through search. The project focused on building a fast PostgreSQL backend capable of handling hundreds of thousands of interconnected entries.
+                What I learnt building this: Creating SQL tables with relationships and medium complex search functions designed to make back-end and front-end communicate very fast.
+            </p>
+
+              <a href="https://github.com/holmsander/fokos">See source code</a>
             </div>
           </article>
 
           <article class="item">
             <div class="meta">2025</div>
             <div>
-              <h3>Project Two</h3>
+              <h3>Fokos, productivity focused social media app</h3>
               <p class="muted">
-                Another selected piece of work. Keep it brief and direct.
-              </p>
-              <a href="#">View project</a>
-            </div>
-          </article>
+                    This app turns time tracking into a shared, motivating experience. Start a custom Pomodoro session or run a simple timer to log focused work. After each session, you can add a short description and optional photo to capture what you accomplished.
 
-          <article class="item">
-            <div class="meta">2024</div>
-            <div>
-              <h3>Project Three</h3>
-              <p class="muted">
-                A simple case study, website, brand, app, or experiment.
-              </p>
-              <a href="#">View project</a>
+                    Your sessions are saved in a personal logbook and shared with friends, creating a social feed of real productivity. Seeing others stay focused helps motivate you to do the same—while the time-based nature of each post encourages meaningful work instead of passive scrolling.
+
+                    Built with TypeScript and React, with Supabase powering the backend. This app worked in closed environment, only tested with few users.
+
+                    What I learnt: building larger projects with ai, how to make ai with limited memory understand large contexts</p>
+              <a href="https://github.com/holmsander/fokos">See source code</a>
             </div>
           </article>
-        </div>
-      </section>
 
       <section id="about">
         <h2>About</h2>
@@ -223,7 +214,8 @@ I’m currently studying Data Engineering at Lund University. I am also fluent i
         </p>
         <ul class="muted">
           <li>Lund, Sweden</li>
-          <li>SQL / Python / Java / Strong AI Promter</li>
+          <li>SQL / Python / Java / Strong AI Promter / TypeScript </li>
+          <li>Swedish, English, Mandarin Chinese </li>
         </ul>
       </section>
 
